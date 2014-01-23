@@ -1,0 +1,26 @@
+{
+  "name": "YouDontKnowMyEmail",
+  "version": "0.0.1",
+  "description": "Nodejs实现的一个临时邮件服务，当你需要在某些网站注册用户，但又不想透露自己的邮箱时，可以使用 ydkme 生成的临时的邮箱。ydkme 会在收到邮件时，自动生成邮箱。你可以通过邮箱的名称来命令 ydkme 如何处理收到的邮件。 :D",
+  "main": "index.js",
+  "bin": {
+    "YouDontKnowMyEmail": "daemon.js"
+  },
+  "scripts": {
+    "ydkme": "bin/daemon.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aleechou/YouDontKnowMyEmail.git"
+  },
+  "author": "alee",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/aleechou/YouDontKnowMyEmail/issues"
+  },
+  "homepage": "https://github.com/aleechou/YouDontKnowMyEmail",
+  "dependencies": {
+    "simplesmtp": "~0.3.18",
+    "mongodb": "~1.3.23"
+  }
+}
