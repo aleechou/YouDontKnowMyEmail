@@ -30,15 +30,13 @@ var configTemplate = config.__proto__ = {
     }
 } ;
 
-console.log(config.forwards) ;
-
 
 require("../index").createServer(config.port)
 
     // 设置中间件
     .use(require('../middlewares/savedb.js')(config.db.url))
     .use(require('../middlewares/cmd-expire.js'))
-    .use(require('../middlewares/forward.js')(config.forwards||[]))
+    .use(require('../middlewares/forward.js')(config.forwards||[],config.forwarder))
 
     // 启动
     .listen( config.port||25, function(err){

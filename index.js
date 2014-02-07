@@ -1,5 +1,6 @@
 var simplesmtp = require("simplesmtp");
 var dns = require("dns") ;
+var MailParser = require("mailparser").MailParser ;
 
 
 exports.createServer = function(port){
@@ -10,35 +11,35 @@ exports.createServer = function(port){
 
 	console.log("mail comein.") ;
 	
-	req.chunks = [] ;
+	req.mailparser = new MailParser ;
 	req.on("data", function(chunk){
-	    req.chunks.push(chunk) ;
-	});
-
-	
+	    req.mailparser.write(chunk) ;
+	});	
 	req.on("end", function(){
+	    req.mailparser.end() ;
+	}) ;
 
-	    // 合并buffer chunks
-	    req.contents = "" ;
-	    for(var i=0;i<req.chunks.length;i++)
-		req.contents+= req.chunks[i].toString() ;
+	    
+	req.mailparser.on("end",function(mail){
+	    req.mail = mail ;
+
+	    console.log("------") ;
+	    console.log(req.mail) ;
 
 	    // 执行中间件
 	    var ms = middlewares.slice() ;
 	    function next(){
 		process.nextTick(function(){
 
-		    if( req.rejected ){
+		    if( req.rejected )
 			return ;
-		    }
 
 		    var mw = ms.shift() ;
 
 		    // all middlewares has over
 		    if(!mw) {
-			if(!req.rejected){
+			if(!req.rejected)
 			    req.accept() ;
-			}
 			return ;
 		    }
 
@@ -47,13 +48,19 @@ exports.createServer = function(port){
 			return process.nextTick(next) ;
 
 		    // run middleware
-		    process.nextTick(function(){
-			mw.middleware(req,next) ;
-		    }) ;
+		    mw.middleware(
+			req.mail
+			, next
+			, function(){
+			    req.reject() ;
+			}
+		    ) ;
 
 		}) ;
 	    } ;
+
 	    next() ;
+
 	}) ;
     }) ;
 

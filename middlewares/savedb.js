@@ -11,8 +11,8 @@ module.exports = function(mongourl){
     }
     
 
-    return function (req,next){
-	if(!req.to[0])
+    return function (mail,next,reject){
+	if(!mail.to[0])
 	    return next() ;
 
 	db(function(err,db){
@@ -23,21 +23,30 @@ module.exports = function(mongourl){
 
 	    var emails = db.collection('emails') ;
 
+	    // 保存邮件
+	    db.collection("inbox").insert(
+		mail
+		, function(err) {
+		    if(err) console.log(err) ;
+		}
+	    ) ;
+
+
 	    // insert/find 邮箱地址
-	    emails.findOne({email:req.to[0]},function(err,doc){
+	    emails.findOne({email:mail.to[0].address},function(err,doc){
 		if(err){
 		    console.log(err) ;
 		    return next() ;
 		}
 
-		req.todoc = doc ;
+		mail.todoc = doc ;
 
-		if(!req.todoc){
-		    req.todoc = {
-			email: req.to[0]
+		if(!mail.todoc){
+		    mail.todoc = {
+			email: mail.to[0]
 			, createTime: Date.now()
 		    }
-		    emails.insert(req.todoc,function(err,docs){
+		    emails.insert(mail.todoc,function(err,docs){
 			if(err)
 			    console.log(err) ;
 			return next() ;
@@ -48,19 +57,6 @@ module.exports = function(mongourl){
 		}
 
 	    }) ;
-
-	    // 保存邮件
-	    db.collection("inbox").insert(
-		{
-		    to: req.to[0]
-		    , date: Date.now()
-		    , contents: req.contents
-		    , from: req.from
-		}
-		, function(err) {
-		    if(err) console.log(err) ;
-		}
-	    ) ;
 	}) ;
     }
 }
