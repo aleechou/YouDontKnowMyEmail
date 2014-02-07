@@ -30,7 +30,6 @@ module.exports = function(forwardList,smtpconfig){
 		delete forwardingMail.headers['content-transfer-encoding'] ; // forwardingMail.html 已经解码
 
 		forwardingMail.subject = "(转发：" + mail.from[0].address + "→" + mail.to[0].address + ") " + forwardingMail.subject ;
-		console.log(forwardingMail.subject) ;
 
 		if(forwardingMail.html){
 		    forwardingMail.html = "<p style='margin-bottom: 20px;color: red;'>【该邮件来自 " + mail.from[0].address + "，发送给你的邮箱 " + mail.to[0].address + "】</p>" + forwardingMail.html ;
