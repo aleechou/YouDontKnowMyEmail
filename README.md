@@ -1,8 +1,8 @@
-YouDontKnowMyEmail
+ydkme (You Dont Know My Email)
 ==================
 
 
-Nodejs实现的一个临时邮件服务，当你需要在某些网站注册用户，但又不想透露自己的邮箱时，可以使用 ydkme 生成的临时的邮箱。ydkme 会在收到邮件时，自动生成邮箱。你可以通过邮箱的名称来命令 ydkme 如何处理收到的邮件。 :D
+Nodejs实现的一个临时邮件服务，当你需要在某些网站注册用户，但又不想透露自己的邮箱时，可以使用 ydkme 来隐藏你的真实邮箱：任意填一个邮箱名称，ydkme 会在收到邮件时，自动创建该邮箱。你还可以通过邮箱的名称来命令 ydkme 如何处理收到的邮件。 :D
 
 
 
@@ -95,28 +95,25 @@ sudo ydkme
 
 0. 安装 pm2
 
-```
-sudo npm i pm2 -g
-```
+   ```
+   sudo npm i pm2 -g
+   ```
 
 1. 用 PM2 启动 ydkme：
 
-```
-sudo pm2 start `which ydkme`
-```
+   ```
+   sudo pm2 start `which ydkme`
+   ```
 
 2. 设置为系统服务(Daemon)
 
-```
-sudo pm2 startup
-sudo pm2 dump
-```
+   ```
+   sudo pm2 startup
+   sudo pm2 dump
+   ```
 
 3. 查看输出：
 
-```
-sudo pm2 logs
-```
-
-
-
+   ```
+   sudo pm2 logs
+   ```
