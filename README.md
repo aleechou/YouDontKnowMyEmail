@@ -83,6 +83,8 @@ sudo npn i ydkme -g
 
 * `forwarder` 属性需要你提供一个有效的 smtp 账号，其配置说明参考 nodemailer
 
+  > ydkme 使用一个其他的 smtp server 来转发邮件，而不是以 server to server 的模式将邮件直接投递到你的真实邮箱里，这是为了避免你运行 ydkme 的服务器IP很容易被当做垃圾邮件IP。
+
 ## 启动 ydkme
 
 so easy :
