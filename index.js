@@ -23,9 +23,6 @@ exports.createServer = function(port){
 	req.mailparser.on("end",function(mail){
 	    req.mail = mail ;
 
-	    console.log("------") ;
-	    console.log(req.mail) ;
-
 	    // 执行中间件
 	    var ms = middlewares.slice() ;
 	    function next(){
