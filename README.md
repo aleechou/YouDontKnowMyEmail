@@ -50,7 +50,7 @@ Nodejs实现的一个临时邮件服务，当你需要在某些网站注册用�
 1. 用 NPM 安装 ydkme :
 
 ```
-sudo npn i ydkme -g
+sudo npm i ydkme -g
 ```
 
 2. 任意编辑器创建配置文件 `/etc/ydkme.config.json` ，复制并修改以下内容 ：
